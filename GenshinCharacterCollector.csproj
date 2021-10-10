@@ -87,6 +87,37 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GCC_icon.ico" />
+    <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor.jpg" />
+    <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor_rus.jpg" />
+    <Content Include="Resources\2021-02-03_Invitation_to_Mundane_Life.jpg" />
+    <Content Include="Resources\2021-02-03_Invitation_to_Mundane_Life_rus.jpg" />
+    <Content Include="Resources\2021-03-02-MomentOfBloom.jpg" />
+    <Content Include="Resources\2021-03-02-MomentOfBloom_rus.jpg" />
+    <Content Include="Resources\anemo_blue_gem.png" />
+    <Content Include="Resources\anemo_gold_gem.png" />
+    <Content Include="Resources\anemo_green_gem.png" />
+    <Content Include="Resources\anemo_purple_gem.png" />
+    <Content Include="Resources\cryo_blue_gem.png" />
+    <Content Include="Resources\cryo_gold_gem.png" />
+    <Content Include="Resources\cryo_green_gem.png" />
+    <Content Include="Resources\cryo_purple_gem.png" />
+    <Content Include="Resources\energy_nectar.png" />
+    <Content Include="Resources\exp_book.png" />
+    <Content Include="Resources\GCC_icon.ico" />
+    <Content Include="Resources\GCC_icon.png" />
+    <Content Include="Resources\hoarfrost_core.png" />
+    <Content Include="Resources\juvenile_jade.png" />
+    <Content Include="Resources\pyro_blue_gem.png" />
+    <Content Include="Resources\pyro_gold_gem.png" />
+    <Content Include="Resources\pyro_green_gem.png" />
+    <Content Include="Resources\pyro_purple_gem.png" />
+    <Content Include="Resources\qingxin.png" />
+    <Content Include="Resources\shimmering_nectar.png" />
+    <Content Include="Resources\silk_flower.png" />
+    <Content Include="Resources\whopperflower_nectar.png" />
+    <Content Include="Resources\xiao_first_material.png" />
+    <Content Include="Resources\xiao_second_material.png" />
+    <Content Include="Resources\xiao_third_material.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
