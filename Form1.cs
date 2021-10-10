@@ -14,13 +14,14 @@ namespace GenshinCharacterCollector
 {
     public partial class Form1 : Form
     {
+        private string texturesPath = "Resources/";
         public static Form1 _instance;
         public Form1()
         {
             InitializeComponent();
             _instance = this;
             LoadConfig();
-            expBooxImage.Image = Image.FromFile($"exp_book.png");
+            expBooxImage.Image = Image.FromFile($"{texturesPath}exp_book.png");
         }
 
         private string configPath = @"settings.json";
@@ -34,6 +35,9 @@ namespace GenshinCharacterCollector
             }
             Config = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(configPath));
 
+            try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
+            catch { useRus = false; }
+            changeLang.Text = useRus ? "Rus" : "Eng";
             selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString());
 
             for (int i = 0; i < characterBanners.Count; i++)
@@ -96,6 +100,7 @@ namespace GenshinCharacterCollector
 
         public void SaveConfig()
         {
+            Config["UseRus"] = useRus ? 1 : 0;
             Config["SelectedCharacter"] = selectedCharacter;
             for (int i = 0; i < characterBanners.Count; i++)
             {
@@ -116,12 +121,15 @@ namespace GenshinCharacterCollector
 
         public List<string[]> characterBanners = new List<string[]>()
         {
-            new string[] { "2021-03-02-MomentOfBloom.jpg", "juvenile_jade.png", "silk_flower.png",
+            new string[] { "2021-03-02-MomentOfBloom", "juvenile_jade.png", "silk_flower.png",
                 "pyro_gold_gem.png", "pyro_purple_gem.png", "pyro_blue_gem.png", "pyro_green_gem.png",
-                "hu_tao_third_material.png", "hu_tao_second_material.png", "hu_tao_first_material.png" },
-            new string[] { "2021-02-03_Invitation_to_Mundane_Life.jpg", "juvenile_jade.png", "qingxin.png",
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png" },
+            new string[] { "2021-02-03_Invitation_to_Mundane_Life", "juvenile_jade.png", "qingxin.png",
                 "anemo_gold_gem.png", "anemo_purple_gem.png", "anemo_blue_gem.png", "anemo_green_gem.png",
                 "xiao_third_material.png", "xiao_second_material.png", "xiao_first_material.png" },
+            new string[] { "2021-01-13_Adrift_in_the_Harbor", "hoarfrost_core.png", "qingxin.png",
+                "cryo_gold_gem.png", "cryo_purple_gem.png", "cryo_blue_gem.png", "cryo_green_gem.png",
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png" },
         };
 
         public Dictionary<int, int> expBooks = new Dictionary<int, int>();
@@ -136,6 +144,7 @@ namespace GenshinCharacterCollector
         public Dictionary<int, int> firstMaterials = new Dictionary<int, int>();
 
         private int _selectedCharacter = 0;
+        private bool useRus = false;
         public int selectedCharacter
         {
             get
@@ -151,16 +160,16 @@ namespace GenshinCharacterCollector
 
         private void UpdateImage()
         {
-            flowerMinusButton.Image = Image.FromFile($"{characterBanners[selectedCharacter][0]}");
-            bossItemImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][1]}");
-            flowerImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][2]}");
-            goldGemImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][3]}");
-            purpleGemImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][4]}");
-            blueGemImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][5]}");
-            greenGemImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][6]}");
-            thirdMaterialImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][7]}");
-            secondMaterialImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][8]}");
-            firstMaterialImage.Image = Image.FromFile($"{characterBanners[selectedCharacter][9]}");
+            characterImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][0]}{(useRus ? "_rus.jpg" : ".jpg")}");
+            bossItemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][1]}");
+            flowerImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][2]}");
+            goldGemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][3]}");
+            purpleGemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][4]}");
+            blueGemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][5]}");
+            greenGemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][6]}");
+            thirdMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][7]}");
+            secondMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][8]}");
+            firstMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][9]}");
             //characterPreview.Size = new Size(1080, 533);
         }
 
@@ -186,6 +195,12 @@ namespace GenshinCharacterCollector
         private void xiao_button_Click(object sender, EventArgs e)
         {
             selectedCharacter = 1;
+            CharacterSwapped();
+        }
+
+        private void ganyuButton_Click(object sender, EventArgs e)
+        {
+            selectedCharacter = 2;
             CharacterSwapped();
         }
 
@@ -477,6 +492,14 @@ namespace GenshinCharacterCollector
                 firstMaterials[selectedCharacter]--;
             UpdateFirstMaterials();
             SaveConfig();
+        }
+
+        private void changeLang_Click(object sender, EventArgs e)
+        {
+            useRus = !useRus;
+            changeLang.Text = useRus ? "Rus" : "Eng";
+            SaveConfig();
+            UpdateImage();
         }
     }
 }

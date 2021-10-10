@@ -1,4 +1,8 @@
 ﻿
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
 namespace GenshinCharacterCollector
 {
     partial class Form1
@@ -30,7 +34,7 @@ namespace GenshinCharacterCollector
         private void InitializeComponent()
         {
             this.hu_taoButton = new System.Windows.Forms.Button();
-            this.flowerMinusButton = new System.Windows.Forms.PictureBox();
+            this.characterImage = new System.Windows.Forms.PictureBox();
             this.xiao_button = new System.Windows.Forms.Button();
             this.expBooxImage = new System.Windows.Forms.PictureBox();
             this.expBookLabel = new System.Windows.Forms.Label();
@@ -41,7 +45,7 @@ namespace GenshinCharacterCollector
             this.bossItemPlusButton = new System.Windows.Forms.Button();
             this.bossItemsLabel = new System.Windows.Forms.Label();
             this.bossItemImage = new System.Windows.Forms.PictureBox();
-            this.flowersMinusButton = new System.Windows.Forms.Button();
+            this.flowerMinusButton = new System.Windows.Forms.Button();
             this.flowerPlusButton = new System.Windows.Forms.Button();
             this.flowersLabel = new System.Windows.Forms.Label();
             this.flowerImage = new System.Windows.Forms.PictureBox();
@@ -73,7 +77,9 @@ namespace GenshinCharacterCollector
             this.secondMaterialPlusButton = new System.Windows.Forms.Button();
             this.secondMaterialLabel = new System.Windows.Forms.Label();
             this.secondMaterialImage = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.flowerMinusButton)).BeginInit();
+            this.ganyuButton = new System.Windows.Forms.Button();
+            this.changeLang = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.characterImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.expBooxImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossItemImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flowerImage)).BeginInit();
@@ -97,13 +103,13 @@ namespace GenshinCharacterCollector
             this.hu_taoButton.UseVisualStyleBackColor = true;
             this.hu_taoButton.Click += new System.EventHandler(this.hu_taoButton_Click);
             // 
-            // flowerMinusButton
+            // characterImage
             // 
-            this.flowerMinusButton.Location = new System.Drawing.Point(196, 12);
-            this.flowerMinusButton.Name = "flowerMinusButton";
-            this.flowerMinusButton.Size = new System.Drawing.Size(1620, 800);
-            this.flowerMinusButton.TabIndex = 1;
-            this.flowerMinusButton.TabStop = false;
+            this.characterImage.Location = new System.Drawing.Point(196, 12);
+            this.characterImage.Name = "characterImage";
+            this.characterImage.Size = new System.Drawing.Size(1620, 800);
+            this.characterImage.TabIndex = 1;
+            this.characterImage.TabStop = false;
             // 
             // xiao_button
             // 
@@ -207,16 +213,16 @@ namespace GenshinCharacterCollector
             this.bossItemImage.TabIndex = 8;
             this.bossItemImage.TabStop = false;
             // 
-            // flowersMinusButton
+            // flowerMinusButton
             // 
-            this.flowersMinusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(254)));
-            this.flowersMinusButton.Location = new System.Drawing.Point(1741, 558);
-            this.flowersMinusButton.Name = "flowersMinusButton";
-            this.flowersMinusButton.Size = new System.Drawing.Size(60, 60);
-            this.flowersMinusButton.TabIndex = 15;
-            this.flowersMinusButton.Text = "-";
-            this.flowersMinusButton.UseVisualStyleBackColor = true;
-            this.flowersMinusButton.Click += new System.EventHandler(this.flowerMinusButton_Click);
+            this.flowerMinusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(254)));
+            this.flowerMinusButton.Location = new System.Drawing.Point(1741, 558);
+            this.flowerMinusButton.Name = "flowerMinusButton";
+            this.flowerMinusButton.Size = new System.Drawing.Size(60, 60);
+            this.flowerMinusButton.TabIndex = 15;
+            this.flowerMinusButton.Text = "-";
+            this.flowerMinusButton.UseVisualStyleBackColor = true;
+            this.flowerMinusButton.Click += new System.EventHandler(this.flowerMinusButton_Click);
             // 
             // flowerPlusButton
             // 
@@ -527,11 +533,35 @@ namespace GenshinCharacterCollector
             this.secondMaterialImage.TabIndex = 28;
             this.secondMaterialImage.TabStop = false;
             // 
+            // ganyuButton
+            // 
+            this.ganyuButton.Font = new System.Drawing.Font("Comic Sans MS", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(254)));
+            this.ganyuButton.Location = new System.Drawing.Point(12, 132);
+            this.ganyuButton.Name = "ganyuButton";
+            this.ganyuButton.Size = new System.Drawing.Size(178, 54);
+            this.ganyuButton.TabIndex = 44;
+            this.ganyuButton.Text = "Ganyu";
+            this.ganyuButton.UseVisualStyleBackColor = true;
+            this.ganyuButton.Click += new System.EventHandler(this.ganyuButton_Click);
+            // 
+            // changeLang
+            // 
+            this.changeLang.Font = new System.Drawing.Font("Comic Sans MS", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(254)));
+            this.changeLang.Location = new System.Drawing.Point(12, 758);
+            this.changeLang.Name = "changeLang";
+            this.changeLang.Size = new System.Drawing.Size(178, 54);
+            this.changeLang.TabIndex = 45;
+            this.changeLang.Text = "Eng";
+            this.changeLang.UseVisualStyleBackColor = true;
+            this.changeLang.Click += new System.EventHandler(this.changeLang_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1827, 824);
+            this.Controls.Add(this.changeLang);
+            this.Controls.Add(this.ganyuButton);
             this.Controls.Add(this.firstMaterialMinusButton);
             this.Controls.Add(this.firstMaterialPlusButton);
             this.Controls.Add(this.firstMaterialLabel);
@@ -560,7 +590,7 @@ namespace GenshinCharacterCollector
             this.Controls.Add(this.goldGemPlusButton);
             this.Controls.Add(this.goldGemLabel);
             this.Controls.Add(this.goldGemImage);
-            this.Controls.Add(this.flowersMinusButton);
+            this.Controls.Add(this.flowerMinusButton);
             this.Controls.Add(this.flowerPlusButton);
             this.Controls.Add(this.flowersLabel);
             this.Controls.Add(this.flowerImage);
@@ -574,11 +604,11 @@ namespace GenshinCharacterCollector
             this.Controls.Add(this.expBookLabel);
             this.Controls.Add(this.expBooxImage);
             this.Controls.Add(this.xiao_button);
-            this.Controls.Add(this.flowerMinusButton);
+            this.Controls.Add(this.characterImage);
             this.Controls.Add(this.hu_taoButton);
             this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.flowerMinusButton)).EndInit();
+            this.Text = "Genshin Character Collector";
+            ((System.ComponentModel.ISupportInitialize)(this.characterImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.expBooxImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bossItemImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flowerImage)).EndInit();
@@ -593,11 +623,18 @@ namespace GenshinCharacterCollector
             this.PerformLayout();
 
         }
+        private void SetIcon()
+        {
+            if (File.Exists("Resources/GCC_icon.ico"))
+                this.Icon = new Icon("Resources/GCC_icon.ico");
+            else
+                MessageBox.Show("Application Icon not found, check Resources", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
         #endregion
 
         private System.Windows.Forms.Button hu_taoButton;
-        private System.Windows.Forms.PictureBox flowerMinusButton;
+        private System.Windows.Forms.PictureBox characterImage;
         private System.Windows.Forms.Button xiao_button;
         private System.Windows.Forms.PictureBox expBooxImage;
         private System.Windows.Forms.Label expBookLabel;
@@ -608,7 +645,7 @@ namespace GenshinCharacterCollector
         private System.Windows.Forms.Button bossItemPlusButton;
         private System.Windows.Forms.Label bossItemsLabel;
         private System.Windows.Forms.PictureBox bossItemImage;
-        private System.Windows.Forms.Button flowersMinusButton;
+        private System.Windows.Forms.Button flowerMinusButton;
         private System.Windows.Forms.Button flowerPlusButton;
         private System.Windows.Forms.Label flowersLabel;
         private System.Windows.Forms.PictureBox flowerImage;
@@ -640,6 +677,8 @@ namespace GenshinCharacterCollector
         private System.Windows.Forms.Button secondMaterialPlusButton;
         private System.Windows.Forms.Label secondMaterialLabel;
         private System.Windows.Forms.PictureBox secondMaterialImage;
+        private Button ganyuButton;
+        private Button changeLang;
     }
 }
 
