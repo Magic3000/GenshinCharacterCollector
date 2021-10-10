@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GCC_icon.ico" />
+    <Content Include="Newtonsoft.Json.dll" />
     <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor.jpg" />
     <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor_rus.jpg" />
     <Content Include="Resources\2021-02-03_Invitation_to_Mundane_Life.jpg" />
