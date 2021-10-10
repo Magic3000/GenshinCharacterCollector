@@ -71,6 +71,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -81,13 +82,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\settings.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GCC_icon.ico" />
-    <Content Include="Newtonsoft.Json.dll" />
     <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor.jpg" />
     <Content Include="Resources\2021-01-13_Adrift_in_the_Harbor_rus.jpg" />
     <Content Include="Resources\2021-02-03_Invitation_to_Mundane_Life.jpg" />
@@ -98,6 +98,7 @@
     <Content Include="Resources\anemo_gold_gem.png" />
     <Content Include="Resources\anemo_green_gem.png" />
     <Content Include="Resources\anemo_purple_gem.png" />
+    <Content Include="Resources\crown_of_insight.png" />
     <Content Include="Resources\cryo_blue_gem.png" />
     <Content Include="Resources\cryo_gold_gem.png" />
     <Content Include="Resources\cryo_green_gem.png" />
@@ -106,19 +107,31 @@
     <Content Include="Resources\exp_book.png" />
     <Content Include="Resources\GCC_icon.ico" />
     <Content Include="Resources\GCC_icon.png" />
+    <Content Include="Resources\guide_to_diligence.png" />
+    <Content Include="Resources\guide_to_prosperity.png" />
     <Content Include="Resources\hoarfrost_core.png" />
     <Content Include="Resources\juvenile_jade.png" />
+    <Content Include="Resources\philosophies_of_diligence.png" />
+    <Content Include="Resources\philosophies_of_prosperity.png" />
     <Content Include="Resources\pyro_blue_gem.png" />
     <Content Include="Resources\pyro_gold_gem.png" />
     <Content Include="Resources\pyro_green_gem.png" />
     <Content Include="Resources\pyro_purple_gem.png" />
     <Content Include="Resources\qingxin.png" />
+    <Content Include="Resources\shadow_of_the_warrior.png" />
+    <Content Include="Resources\shard_of_a_foul_legacy.png" />
     <Content Include="Resources\shimmering_nectar.png" />
     <Content Include="Resources\silk_flower.png" />
+    <Content Include="Resources\slime_concentrate.png" />
+    <Content Include="Resources\slime_condensate.png" />
+    <Content Include="Resources\slime_secretions.png" />
+    <Content Include="Resources\teachings_of_diligence.png" />
+    <Content Include="Resources\teachings_of_prosperity.png" />
     <Content Include="Resources\whopperflower_nectar.png" />
-    <Content Include="Resources\xiao_first_material.png" />
-    <Content Include="Resources\xiao_second_material.png" />
-    <Content Include="Resources\xiao_third_material.png" />
+    <None Include="bin\Debug\Resources\2021-03-02-MomentOfBloom.jpg" />
+    <None Include="bin\Debug\Resources\pyro_gold_gem.png" />
+    <Content Include="GCC_icon.ico" />
+    <Content Include="Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,13 +40,6 @@ namespace GenshinCharacterCollector
             if (Config == null)
                 Config = new Dictionary<string, object>();
 
-            try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
-            catch { useRus = false; }
-            changeLang.Text = useRus ? "Rus" : "Eng";
-
-            try { selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString()); }
-            catch { selectedCharacter = 0; }
-
             for (int i = 0; i < characterBanners.Count; i++)
             {
                 try { expBooks[i] = int.Parse(Config[$"{i}_books"].ToString()); }
@@ -71,8 +66,28 @@ namespace GenshinCharacterCollector
                 catch { secondMaterials[i] = 0; }
                 try { firstMaterials[i] = int.Parse(Config[$"{i}_first_materials"].ToString()); }
                 catch { firstMaterials[i] = 0; }
+
+                try { greenTalents[i] = int.Parse(Config[$"{i}_green_talents"].ToString()); }
+                catch { greenTalents[i] = 0; }
+                try { blueTalents[i] = int.Parse(Config[$"{i}_blue_talents"].ToString()); }
+                catch { blueTalents[i] = 0; }
+                try { purpleTalents[i] = int.Parse(Config[$"{i}_purple_talents"].ToString()); }
+                catch { purpleTalents[i] = 0; }
+                try { crowns[i] = int.Parse(Config[$"{i}_crowns"].ToString()); }
+                catch { crowns[i] = 0; }
+
+                try { thirdTalentMaterials[i] = int.Parse(Config[$"{i}_third_talent_materials"].ToString()); }
+                catch { thirdTalentMaterials[i] = 0; }
+                try { secondTalentMaterials[i] = int.Parse(Config[$"{i}_second_talent_materials"].ToString()); }
+                catch { secondTalentMaterials[i] = 0; }
+                try { firstTalentMaterials[i] = int.Parse(Config[$"{i}_first_talent_materials"].ToString()); }
+                catch { firstTalentMaterials[i] = 0; }
+                try { talentBossItems[i] = int.Parse(Config[$"{i}_talent_boss_items"].ToString()); }
+                catch { talentBossItems[i] = 0; }
             }
-            currentBooks = expBooks[selectedCharacter];
+            try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
+            catch { useRus = false; }
+            /*currentBooks = expBooks[selectedCharacter];
             expBookLabel.Text = $"{currentBooks}/432";
             var booksLeft = 432 - currentBooks;
             var totalSeconds = booksLeft * minsPerBook * 60;
@@ -101,6 +116,35 @@ namespace GenshinCharacterCollector
 
             currentFirstMaterials = firstMaterials[selectedCharacter];
             firstMaterialLabel.Text = $"{currentFirstMaterials}/18";
+
+            currentGreenTalents = greenTalents[selectedCharacter];
+            greenTalentLabel.Text = $"{currentGreenTalents}/9";
+            currentBlueTalents = blueTalents[selectedCharacter];
+            blueTalentLabel.Text = $"{currentBlueTalents}/63";
+            currentPurpleTalents = purpleTalents[selectedCharacter];
+            purpleTalentLabel.Text = $"{currentPurpleTalents}/114";
+            currentCrowns = crowns[selectedCharacter];
+            crownLabel.Text = $"{currentCrowns}/3";
+
+            currentFirstTalentMaterials = firstTalentMaterials[selectedCharacter];
+            firstTalentMaterialLabel.Text = $"{currentFirstTalentMaterials}/18";
+
+            currentSecondTalentMaterials = secondTalentMaterials[selectedCharacter];
+            secondTalentMaterialLabel.Text = $"{currentSecondTalentMaterials}/66";
+
+            currentThirdTalentMaterials = thirdTalentMaterials[selectedCharacter];
+            thirdTalentMaterialLabel.Text = $"{currentThirdTalentMaterials}/93";
+
+            currentTalentBossItems = talentBossItems[selectedCharacter];
+            talentBossItemLabel.Text = $"{currentTalentBossItems}/18";*/
+
+            changeLang.Text = useRus ? "Rus" : "Eng";
+            charactersDropMenu.Items.Clear();
+            charactersDropMenu.Items.AddRange(characterNames[useRus ? 1 : 0].ToArray());
+
+            try { selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString()); }
+            catch { selectedCharacter = 0; }
+
         }
 
         public void SaveConfig()
@@ -119,22 +163,41 @@ namespace GenshinCharacterCollector
                 Config[$"{i}_third_materials"] = thirdMaterials[i];
                 Config[$"{i}_second_materials"] = secondMaterials[i];
                 Config[$"{i}_first_materials"] = firstMaterials[i];
+
+                Config[$"{i}_green_talents"] = greenTalents[i];
+                Config[$"{i}_blue_talents"] = blueTalents[i];
+                Config[$"{i}_purple_talents"] = purpleTalents[i];
+                Config[$"{i}_crowns"] = crowns[i];
+                Config[$"{i}_third_talent_materials"] = thirdTalentMaterials[i];
+                Config[$"{i}_second_talent_materials"] = secondTalentMaterials[i];
+                Config[$"{i}_first_talent_materials"] = firstTalentMaterials[i];
+                Config[$"{i}_talent_boss_items"] = talentBossItems[i];
             }
             File.WriteAllText(configPath, JsonConvert.SerializeObject(Config));
         }
 
-
+        public List<List<string>> characterNames = new List<List<string>>()
+        {
+            new List<string>() { "Hu Tao", "Xiao", "Ganyu" },
+            new List<string>() { "Ху Тао", "Сяо", "Гань Юй" }
+        };
         public List<string[]> characterBanners = new List<string[]>()
         {
             new string[] { "2021-03-02-MomentOfBloom", "juvenile_jade.png", "silk_flower.png",
                 "pyro_gold_gem.png", "pyro_purple_gem.png", "pyro_blue_gem.png", "pyro_green_gem.png",
-                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png" },
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png",
+                "teachings_of_diligence.png", "guide_to_diligence.png", "philosophies_of_diligence.png", "crown_of_insight.png",
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png", "shard_of_a_foul_legacy.png", "#E5451E" },
             new string[] { "2021-02-03_Invitation_to_Mundane_Life", "juvenile_jade.png", "qingxin.png",
                 "anemo_gold_gem.png", "anemo_purple_gem.png", "anemo_blue_gem.png", "anemo_green_gem.png",
-                "xiao_third_material.png", "xiao_second_material.png", "xiao_first_material.png" },
+                "slime_concentrate.png", "slime_secretions.png", "slime_condensate.png",
+                "teachings_of_prosperity.png", "guide_to_prosperity.png", "philosophies_of_prosperity.png", "crown_of_insight.png",
+                "slime_concentrate.png", "slime_secretions.png", "slime_condensate.png", "shadow_of_the_warrior.png", "#137075" },
             new string[] { "2021-01-13_Adrift_in_the_Harbor", "hoarfrost_core.png", "qingxin.png",
                 "cryo_gold_gem.png", "cryo_purple_gem.png", "cryo_blue_gem.png", "cryo_green_gem.png",
-                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png" },
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png",
+                "teachings_of_diligence.png", "guide_to_diligence.png", "philosophies_of_diligence.png", "crown_of_insight.png",
+                "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png", "shadow_of_the_warrior.png", "#34AACE" },
         };
 
         public Dictionary<int, int> expBooks = new Dictionary<int, int>();
@@ -147,6 +210,14 @@ namespace GenshinCharacterCollector
         public Dictionary<int, int> thirdMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> secondMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> firstMaterials = new Dictionary<int, int>();
+        public Dictionary<int, int> greenTalents = new Dictionary<int, int>();
+        public Dictionary<int, int> blueTalents = new Dictionary<int, int>();
+        public Dictionary<int, int> purpleTalents = new Dictionary<int, int>();
+        public Dictionary<int, int> crowns = new Dictionary<int, int>();
+        public Dictionary<int, int> thirdTalentMaterials = new Dictionary<int, int>();
+        public Dictionary<int, int> secondTalentMaterials = new Dictionary<int, int>();
+        public Dictionary<int, int> firstTalentMaterials = new Dictionary<int, int>();
+        public Dictionary<int, int> talentBossItems = new Dictionary<int, int>();
 
         private int _selectedCharacter = 0;
         private bool useRus = false;
@@ -160,12 +231,14 @@ namespace GenshinCharacterCollector
             {
                 _selectedCharacter = value;
                 UpdateImage();
+                charactersDropMenu.Text = charactersDropMenu.Items[value].ToString();
             }
         }
 
         private void UpdateImage()
         {
-            characterImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][0]}{(useRus ? "_rus.jpg" : ".jpg")}");
+            this.BackgroundImage = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][0]}{(useRus ? "_rus.jpg" : ".jpg")}");
+            //characterImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][0]}{(useRus ? "_rus.jpg" : ".jpg")}");
             bossItemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][1]}");
             flowerImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][2]}");
             goldGemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][3]}");
@@ -175,11 +248,55 @@ namespace GenshinCharacterCollector
             thirdMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][7]}");
             secondMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][8]}");
             firstMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][9]}");
+
+            greenTalentImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][10]}");
+            blueTalentImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][11]}");
+            purpleTalentImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][12]}");
+            crownImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][13]}");
+            firstTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][14]}");
+            secondTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][15]}");
+            thirdTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][16]}");
+            talentBossItemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][17]}");
+            typeof(Form1).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.FieldType == typeof(Button)).ToList().ForEach(y =>
+            {
+                var characterColor = ColorTranslator.FromHtml(characterBanners[selectedCharacter][18]);
+                var btn = ((Button)y.GetValue(this));
+                btn.ForeColor = characterColor;
+                btn.BackColor = Lerp(characterColor, Color.Black, 0.6f);
+                btn.FlatAppearance.BorderColor = Color.White;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.FlatAppearance.MouseDownBackColor = Color.White;
+                btn.FlatAppearance.MouseOverBackColor = Lerp(characterColor, Color.White, 0.6f);
+            });
+            typeof(Form1).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.FieldType == typeof(Label)).ToList().ForEach(y =>
+            {
+                var characterColor = ColorTranslator.FromHtml(characterBanners[selectedCharacter][18]);
+                var lbl = ((Label)y.GetValue(this));
+                lbl.ForeColor = Color.Black;
+                lbl.BackColor = Lerp(characterColor, Color.White, 0.6f);
+            });
             //characterPreview.Size = new Size(1080, 533);
         }
 
-        private void CharacterSwapped()
+        public Color Lerp(Color s, Color t, float k)
         {
+            var bk = (1 - k);
+            var a = s.A * bk + t.A * k;
+            var r = s.R * bk + t.R * k;
+            var g = s.G * bk + t.G * k;
+            var b = s.B * bk + t.B * k;
+            return Color.FromArgb((int)a, (int)r, (int)g, (int)b);
+        }
+
+        public float Lerp(float s, float t, float k)
+        {
+            var bk = (1 - k);
+            return s * bk + t * k;
+        }
+
+        private void CharacterSwapped(int newCharacter)
+        {
+            selectedCharacter = newCharacter;
             UpdateBooks();
             UpdateBossItems();
             UpdateFlowers();
@@ -190,9 +307,17 @@ namespace GenshinCharacterCollector
             UpdateThirdMaterials();
             UpdateSecondMaterials();
             UpdateFirstMaterials();
+            UpdateGreenTalents();
+            UpdateBlueTalents();
+            UpdatePurpleTalents();
+            UpdateCrowns();
+            UpdateFirstTalentMaterial();
+            UpdateSecondTalentMaterial();
+            UpdateThirdTalentMaterial();
+            UpdateTalentBossItems();
             SaveConfig();
         }
-        private void hu_taoButton_Click(object sender, EventArgs e)
+        /*private void hu_taoButton_Click(object sender, EventArgs e)
         {
             selectedCharacter = 0;
             CharacterSwapped();
@@ -207,9 +332,9 @@ namespace GenshinCharacterCollector
         {
             selectedCharacter = 2;
             CharacterSwapped();
-        }
+        }*/
 
-        private static int oneResinTime = 8;
+        //private static int oneResinTime = 8;
         private static float minsPerBook = 35.5555555556f;
         private void UpdateBooks()
         {
@@ -218,7 +343,7 @@ namespace GenshinCharacterCollector
             var booksLeft = 432 - currentBooks;
             var totalSeconds = booksLeft * minsPerBook * 60;
             TimeSpan timeLeft = new TimeSpan(0, 0, (int)totalSeconds);
-            expBookTimeLeft.Text = $"{string.Format("{0:0}", timeLeft.TotalDays)}d or {string.Format("{0:0}", timeLeft.TotalHours)}hrs";
+            expBookTimeLeft.Text = $"{string.Format("{0:0}", timeLeft.TotalDays)}{(useRus ? "д" : "d")} or {string.Format("{0:0}", timeLeft.TotalHours)}{(useRus ? "ч" : "h")}";
             //int price = 40;
             //int oneTake = oneResinTime * price;
             //var bestMinutes = books / 10 * oneTake;
@@ -503,8 +628,260 @@ namespace GenshinCharacterCollector
         {
             useRus = !useRus;
             changeLang.Text = useRus ? "Rus" : "Eng";
+            charactersDropMenu.Items.Clear();
+            charactersDropMenu.Items.AddRange(characterNames[useRus ? 1 : 0].ToArray());
+            charactersDropMenu.Text = charactersDropMenu.Items[selectedCharacter].ToString();
             SaveConfig();
             UpdateImage();
+        }
+
+        private void charactersDropMenu_SelectedIndexChanged(object sender, EventArgs e) => CharacterSwapped(charactersDropMenu.Items.IndexOf(charactersDropMenu.SelectedItem.ToString()));
+
+        private List<string> charactersHoneyLinks = new List<string>()
+        {
+            "https://genshin.honeyhunterworld.com/db/char/hutao/?lang=",
+            "https://genshin.honeyhunterworld.com/db/char/xiao/?lang=",
+            "https://genshin.honeyhunterworld.com/db/char/ganyu/?lang="
+        };
+
+        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e) => Process.Start($"{charactersHoneyLinks[selectedCharacter]}{(useRus ? "RU" : "EN")}");
+
+        private void UpdateGreenTalents()
+        {
+            currentGreenTalents = greenTalents[selectedCharacter];
+            greenTalentLabel.Text = $"{currentGreenTalents}/9";
+        }
+        public int currentGreenTalents = 0;
+        private void greenTalentPlusButton_Click(object sender, EventArgs e)
+        {
+            if (greenTalents[selectedCharacter] >= 9)
+                greenTalents[selectedCharacter] = 9;
+            else
+                greenTalents[selectedCharacter]++;
+            UpdateGreenTalents();
+            SaveConfig();
+        }
+
+        private void greenTalentMinusButton_Click(object sender, EventArgs e)
+        {
+            if (greenTalents[selectedCharacter] <= 0)
+                greenTalents[selectedCharacter] = 0;
+            else
+                greenTalents[selectedCharacter]--;
+            UpdateGreenTalents();
+            SaveConfig();
+        }
+
+        private void UpdateBlueTalents()
+        {
+            currentBlueTalents = blueTalents[selectedCharacter];
+            blueTalentLabel.Text = $"{currentBlueTalents}/63";
+        }
+        public int currentBlueTalents = 0;
+        private void blueTalentPlusButton_Click(object sender, EventArgs e)
+        {
+            if (blueTalents[selectedCharacter] >= 63)
+                blueTalents[selectedCharacter] = 63;
+            else
+                blueTalents[selectedCharacter]++;
+            UpdateBlueTalents();
+            SaveConfig();
+        }
+
+        private void blueTalentMinusButton_Click(object sender, EventArgs e)
+        {
+            if (blueTalents[selectedCharacter] <= 0)
+                blueTalents[selectedCharacter] = 0;
+            else
+                blueTalents[selectedCharacter]--;
+            UpdateBlueTalents();
+            SaveConfig();
+        }
+        private void UpdatePurpleTalents()
+        {
+            currentPurpleTalents = purpleTalents[selectedCharacter];
+            purpleTalentLabel.Text = $"{currentPurpleTalents}/114";
+        }
+        public int currentPurpleTalents = 0;
+
+        private void purpleTalentPlusButton_Click(object sender, EventArgs e)
+        {
+            if (purpleTalents[selectedCharacter] >= 114)
+                purpleTalents[selectedCharacter] = 114;
+            else
+                purpleTalents[selectedCharacter]++;
+            UpdatePurpleTalents();
+            SaveConfig();
+        }
+
+        private void purpleTalentMinusButton_Click(object sender, EventArgs e)
+        {
+            if (purpleTalents[selectedCharacter] <= 0)
+                purpleTalents[selectedCharacter] = 0;
+            else
+                purpleTalents[selectedCharacter]--;
+            UpdatePurpleTalents();
+            SaveConfig();
+        }
+        private void UpdateCrowns()
+        {
+            currentCrowns = crowns[selectedCharacter];
+            crownLabel.Text = $"{currentCrowns}/3";
+        }
+        public int currentCrowns = 0;
+
+        private void crownPlusButton_Click(object sender, EventArgs e)
+        {
+            if (crowns[selectedCharacter] >= 3)
+                crowns[selectedCharacter] = 3;
+            else
+                crowns[selectedCharacter]++;
+            UpdateCrowns();
+            SaveConfig();
+        }
+
+        private void crownMinusButton_Click(object sender, EventArgs e)
+        {
+            if (crowns[selectedCharacter] <= 0)
+                crowns[selectedCharacter] = 0;
+            else
+                crowns[selectedCharacter]--;
+            UpdateCrowns();
+            SaveConfig();
+        }
+
+        private void UpdateFirstTalentMaterial()
+        {
+            currentFirstTalentMaterials = firstTalentMaterials[selectedCharacter];
+            firstTalentMaterialLabel.Text = $"{currentFirstTalentMaterials}/18";
+        }
+        public int currentFirstTalentMaterials = 0;
+        private void firstTalentMaterialPlusButton_Click(object sender, EventArgs e)
+        {
+            if (firstTalentMaterials[selectedCharacter] >= 18)
+                firstTalentMaterials[selectedCharacter] = 18;
+            else
+                firstTalentMaterials[selectedCharacter]++;
+            UpdateFirstTalentMaterial();
+            SaveConfig();
+        }
+
+        private void firstTalentMaterialMinusButton_Click(object sender, EventArgs e)
+        {
+            if (firstTalentMaterials[selectedCharacter] <= 0)
+                firstTalentMaterials[selectedCharacter] = 0;
+            else
+                firstTalentMaterials[selectedCharacter]--;
+            UpdateFirstTalentMaterial();
+            SaveConfig();
+        }
+
+        private void UpdateSecondTalentMaterial()
+        {
+            currentSecondTalentMaterials = secondTalentMaterials[selectedCharacter];
+            secondTalentMaterialLabel.Text = $"{currentSecondTalentMaterials}/66";
+        }
+        public int currentSecondTalentMaterials = 0;
+        private void secondTalentMaterialPlusButton_Click(object sender, EventArgs e)
+        {
+            if (secondTalentMaterials[selectedCharacter] >= 66)
+                secondTalentMaterials[selectedCharacter] = 66;
+            else
+                secondTalentMaterials[selectedCharacter]++;
+            UpdateSecondTalentMaterial();
+            SaveConfig();
+        }
+
+        private void secondTalentMaterialMinusButton_Click(object sender, EventArgs e)
+        {
+            if (secondTalentMaterials[selectedCharacter] <= 0)
+                secondTalentMaterials[selectedCharacter] = 0;
+            else
+                secondTalentMaterials[selectedCharacter]--;
+            UpdateSecondTalentMaterial();
+            SaveConfig();
+        }
+
+        private void UpdateThirdTalentMaterial()
+        {
+            currentThirdTalentMaterials = thirdTalentMaterials[selectedCharacter];
+            thirdTalentMaterialLabel.Text = $"{currentThirdTalentMaterials}/93";
+        }
+        public int currentThirdTalentMaterials = 0;
+        private void thirdTalentMaterialPlusButton_Click(object sender, EventArgs e)
+        {
+            if (thirdTalentMaterials[selectedCharacter] >= 93)
+                thirdTalentMaterials[selectedCharacter] = 96;
+            else
+                thirdTalentMaterials[selectedCharacter]++;
+            UpdateThirdTalentMaterial();
+            SaveConfig();
+        }
+
+        private void thirdTalentMaterialMinusButton_Click(object sender, EventArgs e)
+        {
+            if (thirdTalentMaterials[selectedCharacter] <= 0)
+                thirdTalentMaterials[selectedCharacter] = 0;
+            else
+                thirdTalentMaterials[selectedCharacter]--;
+            UpdateThirdTalentMaterial();
+            SaveConfig();
+        }
+
+        private void UpdateTalentBossItems()
+        {
+            currentTalentBossItems = talentBossItems[selectedCharacter];
+            talentBossItemLabel.Text = $"{currentTalentBossItems}/18";
+        }
+        public int currentTalentBossItems = 0;
+        private void talentBossItemPlusButton_Click(object sender, EventArgs e)
+        {
+            if (talentBossItems[selectedCharacter] >= 18)
+                talentBossItems[selectedCharacter] = 18;
+            else
+                talentBossItems[selectedCharacter]++;
+            UpdateTalentBossItems();
+            SaveConfig();
+        }
+
+        private void talentBossItemMinusButton_Click(object sender, EventArgs e)
+        {
+            if (talentBossItems[selectedCharacter] <= 0)
+                talentBossItems[selectedCharacter] = 0;
+            else
+                talentBossItems[selectedCharacter]--;
+            UpdateTalentBossItems();
+            SaveConfig();
+        }
+
+        private void calculateChanceButton_Click(object sender, EventArgs e)
+        {
+            var primos = calculateChanceText.Text;
+            if (!int.TryParse(primos, out int num))
+            {
+                calculateChanceLabel.Text = "Error";
+                return;
+            }
+            var wishes = num / 160;
+            float chance = 0;
+            int pity = 0;
+            for (int i = 0; i < wishes; i++)
+            {
+                if (pity < 75)
+                {
+                    pity++;
+                    chance += 0.6f;
+                }
+                else
+                {
+                    if (chance < 100)
+                        chance += Lerp(0.6f, 100f, remap(pity, 75, 90, 0, 1));
+                    pity++;
+                }
+            }
+            if (chance >= 100)
+                chance = 100;
+            calculateChanceLabel.Text = string.Format("{0:0.00}{1} ({2})", chance, (wishes >= 75 ? $"~ {(string.Format("{0:0.00}%", Lerp(0.6f, 100f, remap(wishes, 75, 90, 0, 1))))}" : "%"), wishes);
         }
     }
 }
