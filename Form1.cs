@@ -35,10 +35,15 @@ namespace GenshinCharacterCollector
             }
             Config = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(configPath));
 
+            if (Config == null)
+                Config = new Dictionary<string, object>();
+
             try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
             catch { useRus = false; }
             changeLang.Text = useRus ? "Rus" : "Eng";
-            selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString());
+
+            try { selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString()); }
+            catch { selectedCharacter = 0; }
 
             for (int i = 0; i < characterBanners.Count; i++)
             {
