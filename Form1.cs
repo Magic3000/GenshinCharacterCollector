@@ -84,9 +84,15 @@ namespace GenshinCharacterCollector
                 catch { firstTalentMaterials[i] = 0; }
                 try { talentBossItems[i] = int.Parse(Config[$"{i}_talent_boss_items"].ToString()); }
                 catch { talentBossItems[i] = 0; }
+                try { totalMora[i] = int.Parse(Config[$"{i}_total_mora"].ToString()); }
+                catch { totalMora[i] = 0; }
             }
             try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
             catch { useRus = false; }
+            try { moraType = int.Parse(Config[$"MoraType"].ToString()); }
+            catch { moraType = 0; }
+            moraTypeDropMenu.Text = moraTypeDropMenu.Items[moraType].ToString();
+            UpdateMora();
             /*currentBooks = expBooks[selectedCharacter];
             expBookLabel.Text = $"{currentBooks}/432";
             var booksLeft = 432 - currentBooks;
@@ -151,6 +157,7 @@ namespace GenshinCharacterCollector
         {
             Config["UseRus"] = useRus ? 1 : 0;
             Config["SelectedCharacter"] = selectedCharacter;
+            Config["MoraType"] = moraType;
             for (int i = 0; i < characterBanners.Count; i++)
             {
                 Config[$"{i}_books"] = expBooks[i];
@@ -172,6 +179,7 @@ namespace GenshinCharacterCollector
                 Config[$"{i}_second_talent_materials"] = secondTalentMaterials[i];
                 Config[$"{i}_first_talent_materials"] = firstTalentMaterials[i];
                 Config[$"{i}_talent_boss_items"] = talentBossItems[i];
+                Config[$"{i}_total_mora"] = totalMora[i];
             }
             File.WriteAllText(configPath, JsonConvert.SerializeObject(Config));
         }
@@ -218,6 +226,7 @@ namespace GenshinCharacterCollector
         public Dictionary<int, int> secondTalentMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> firstTalentMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> talentBossItems = new Dictionary<int, int>();
+        public Dictionary<int, int> totalMora = new Dictionary<int, int>();
 
         private int _selectedCharacter = 0;
         private bool useRus = false;
@@ -275,6 +284,20 @@ namespace GenshinCharacterCollector
                 lbl.ForeColor = Color.Black;
                 lbl.BackColor = Lerp(characterColor, Color.White, 0.6f);
             });
+            typeof(Form1).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.FieldType == typeof(ComboBox)).ToList().ForEach(y =>
+            {
+                var characterColor = ColorTranslator.FromHtml(characterBanners[selectedCharacter][18]);
+                var cb = ((ComboBox)y.GetValue(this));
+                cb.ForeColor = Color.Black;
+                cb.BackColor = Lerp(characterColor, Color.White, 0.6f);
+            });
+            typeof(Form1).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.FieldType == typeof(TextBox)).ToList().ForEach(y =>
+            {
+                var characterColor = ColorTranslator.FromHtml(characterBanners[selectedCharacter][18]);
+                var tb = ((TextBox)y.GetValue(this));
+                tb.ForeColor = Color.Black;
+                tb.BackColor = Lerp(characterColor, Color.White, 0.6f);
+            });
             //characterPreview.Size = new Size(1080, 533);
         }
 
@@ -315,6 +338,7 @@ namespace GenshinCharacterCollector
             UpdateSecondTalentMaterial();
             UpdateThirdTalentMaterial();
             UpdateTalentBossItems();
+            UpdateMora();
             SaveConfig();
         }
         /*private void hu_taoButton_Click(object sender, EventArgs e)
@@ -882,6 +906,31 @@ namespace GenshinCharacterCollector
             if (chance >= 100)
                 chance = 100;
             calculateChanceLabel.Text = string.Format("{0:0.00}{1} ({2})", chance, (wishes >= 75 ? $"~ {(string.Format("{0:0.00}%", Lerp(0.6f, 100f, remap(wishes, 75, 90, 0, 1))))}" : "%"), wishes);
+        }
+
+        private void moraText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+
+            totalMora[selectedCharacter] = int.Parse($"{moraText.Text}{e.KeyChar.ToString()}");
+            SaveConfig();
+        }
+
+        public void UpdateMora()
+        {
+            moraText.Text = totalMora[selectedCharacter].ToString();
+            moraLabel.Text = moraType == 0 ? "from 2.092.000" : moraType == 1 ? "from 4.950.000" : "from 7.042.000";
+        }
+        public int moraType;
+        private void moraTypeDropMenu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            moraType = moraTypeDropMenu.Items.IndexOf(moraTypeDropMenu.SelectedItem.ToString());
+            SaveConfig();
+            UpdateMora();
         }
     }
 }

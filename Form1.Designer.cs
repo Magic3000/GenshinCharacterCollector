@@ -113,6 +113,9 @@ namespace GenshinCharacterCollector
             this.calculateChanceText = new System.Windows.Forms.TextBox();
             this.calculateChanceButton = new System.Windows.Forms.Button();
             this.calculateChanceLabel = new System.Windows.Forms.Label();
+            this.moraText = new System.Windows.Forms.TextBox();
+            this.moraLabel = new System.Windows.Forms.Label();
+            this.moraTypeDropMenu = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.firstMaterialImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenGemImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueGemImage)).BeginInit();
@@ -1263,6 +1266,43 @@ namespace GenshinCharacterCollector
             this.calculateChanceLabel.Size = new System.Drawing.Size(0, 39);
             this.calculateChanceLabel.TabIndex = 89;
             // 
+            // moraText
+            // 
+            this.moraText.Font = new System.Drawing.Font("Comic Sans MS", 14F);
+            this.moraText.Location = new System.Drawing.Point(1425, 784);
+            this.moraText.Name = "moraText";
+            this.moraText.Size = new System.Drawing.Size(225, 47);
+            this.moraText.TabIndex = 90;
+            this.moraText.Text = "Mora";
+            this.moraText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.moraText_KeyPress);
+            // 
+            // moraLabel
+            // 
+            this.moraLabel.AutoSize = true;
+            this.moraLabel.Font = new System.Drawing.Font("Comic Sans MS", 14F);
+            this.moraLabel.Location = new System.Drawing.Point(1418, 839);
+            this.moraLabel.Name = "moraLabel";
+            this.moraLabel.Size = new System.Drawing.Size(147, 39);
+            this.moraLabel.TabIndex = 91;
+            this.moraLabel.Text = "totalMora";
+            this.moraLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // moraTypeDropMenu
+            // 
+            this.moraTypeDropMenu.Font = new System.Drawing.Font("Comic Sans MS", 14F);
+            this.moraTypeDropMenu.FormattingEnabled = true;
+            this.moraTypeDropMenu.Items.AddRange(new object[] {
+            "Level",
+            "Talents",
+            "Level&Talents"});
+            this.moraTypeDropMenu.Location = new System.Drawing.Point(1191, 784);
+            this.moraTypeDropMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.moraTypeDropMenu.Name = "moraTypeDropMenu";
+            this.moraTypeDropMenu.Size = new System.Drawing.Size(228, 47);
+            this.moraTypeDropMenu.TabIndex = 92;
+            this.moraTypeDropMenu.Text = "Type of mora";
+            this.moraTypeDropMenu.SelectedIndexChanged += new System.EventHandler(this.moraTypeDropMenu_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -1271,6 +1311,9 @@ namespace GenshinCharacterCollector
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1761, 891);
+            this.Controls.Add(this.moraTypeDropMenu);
+            this.Controls.Add(this.moraLabel);
+            this.Controls.Add(this.moraText);
             this.Controls.Add(this.calculateChanceLabel);
             this.Controls.Add(this.calculateChanceButton);
             this.Controls.Add(this.calculateChanceText);
@@ -1467,6 +1510,9 @@ namespace GenshinCharacterCollector
         private TextBox calculateChanceText;
         private Button calculateChanceButton;
         private Label calculateChanceLabel;
+        private TextBox moraText;
+        private Label moraLabel;
+        private ComboBox moraTypeDropMenu;
     }
 }
 
