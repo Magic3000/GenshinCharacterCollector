@@ -84,8 +84,8 @@ namespace GenshinCharacterCollector
                 catch { firstTalentMaterials[i] = 0; }
                 try { talentBossItems[i] = int.Parse(Config[$"{i}_talent_boss_items"].ToString()); }
                 catch { talentBossItems[i] = 0; }
-                try { totalMora[i] = int.Parse(Config[$"{i}_total_mora"].ToString()); }
-                catch { totalMora[i] = 0; }
+                try { totalMora[i] = Config[$"{i}_total_mora"].ToString(); }
+                catch { totalMora[i] = "0"; }
             }
             try { useRus = int.Parse(Config[$"UseRus"].ToString()) == 1; }
             catch { useRus = false; }
@@ -226,7 +226,7 @@ namespace GenshinCharacterCollector
         public Dictionary<int, int> secondTalentMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> firstTalentMaterials = new Dictionary<int, int>();
         public Dictionary<int, int> talentBossItems = new Dictionary<int, int>();
-        public Dictionary<int, int> totalMora = new Dictionary<int, int>();
+        public Dictionary<int, string> totalMora = new Dictionary<int, string>();
 
         private int _selectedCharacter = 0;
         private bool useRus = false;
@@ -910,19 +910,14 @@ namespace GenshinCharacterCollector
 
         private void moraText_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-
-            totalMora[selectedCharacter] = int.Parse($"{moraText.Text}{e.KeyChar.ToString()}");
+            string inStr = moraText.Text;
+            totalMora[selectedCharacter] = e.KeyChar == (char)Keys.Back ? inStr.Remove(inStr.Length - 1) : $"{inStr}{e.KeyChar}";
             SaveConfig();
         }
 
         public void UpdateMora()
         {
-            moraText.Text = totalMora[selectedCharacter].ToString();
+            moraText.Text = totalMora[selectedCharacter];
             moraLabel.Text = moraType == 0 ? "from 2.092.000" : moraType == 1 ? "from 4.950.000" : "from 7.042.000";
         }
         public int moraType;
