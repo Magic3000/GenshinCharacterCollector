@@ -262,9 +262,9 @@ namespace GenshinCharacterCollector
             blueTalentImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][11]}");
             purpleTalentImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][12]}");
             crownImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][13]}");
-            firstTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][14]}");
+            thirdTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][14]}");
             secondTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][15]}");
-            thirdTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][16]}");
+            firstTalentMaterialImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][16]}");
             talentBossItemImage.Image = Image.FromFile($"{texturesPath}{characterBanners[selectedCharacter][17]}");
             typeof(Form1).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.FieldType == typeof(Button)).ToList().ForEach(y =>
             {
@@ -835,7 +835,7 @@ namespace GenshinCharacterCollector
         private void thirdTalentMaterialPlusButton_Click(object sender, EventArgs e)
         {
             if (thirdTalentMaterials[selectedCharacter] >= 93)
-                thirdTalentMaterials[selectedCharacter] = 96;
+                thirdTalentMaterials[selectedCharacter] = 93;
             else
                 thirdTalentMaterials[selectedCharacter]++;
             UpdateThirdTalentMaterial();
@@ -908,17 +908,33 @@ namespace GenshinCharacterCollector
             calculateChanceLabel.Text = string.Format("{0:0.00}{1} ({2})", chance, (wishes >= 75 ? $"~ {(string.Format("{0:0.00}%", Lerp(0.6f, 100f, remap(wishes, 75, 90, 0, 1))))}" : "%"), wishes);
         }
 
+        private void UpdateMoraTimeLeft()
+        {
+            if (int.TryParse(totalMora[selectedCharacter], out int currentMora) && int.TryParse(moraLabel.Text.Replace(".", "").Replace("from", "").Trim(), out int totallMora))
+            {
+                var moraLeft = totallMora - currentMora;
+                var totalSeconds = moraLeft * minsPerMora * 60;
+                TimeSpan timeLeft = new TimeSpan(0, 0, (int)totalSeconds);
+                moraTimeLeft.Text = $"{string.Format("{0:0}", timeLeft.TotalDays)}{(useRus ? "д" : "d")} or {string.Format("{0:0}", timeLeft.TotalHours)}{(useRus ? "ч" : "h")}";
+            }
+            else
+                moraTimeLeft.Text = $"Error 1st-arg: {totalMora[selectedCharacter]} 2nd-arg: {moraLabel.Text.Replace(".", "").Replace("from", "").Trim()}";
+        }
         private void moraText_KeyPress(object sender, KeyPressEventArgs e)
         {
             string inStr = moraText.Text;
-            totalMora[selectedCharacter] = e.KeyChar == (char)Keys.Back ? inStr.Remove(inStr.Length - 1) : $"{inStr}{e.KeyChar}";
+            var asd = e.KeyChar == (char)Keys.Back ? inStr.Remove(inStr.Length - 1) : $"{inStr}{e.KeyChar}";
+            totalMora[selectedCharacter] = asd;
             SaveConfig();
+            UpdateMoraTimeLeft();
         }
 
+        private static float minsPerMora = 0.00266666666f;
         public void UpdateMora()
         {
             moraText.Text = totalMora[selectedCharacter];
             moraLabel.Text = moraType == 0 ? "from 2.092.000" : moraType == 1 ? "from 4.950.000" : "from 7.042.000";
+            UpdateMoraTimeLeft();
         }
         public int moraType;
         private void moraTypeDropMenu_SelectedIndexChanged(object sender, EventArgs e)

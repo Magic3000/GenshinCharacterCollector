@@ -116,6 +116,7 @@ namespace GenshinCharacterCollector
             this.moraText = new System.Windows.Forms.TextBox();
             this.moraLabel = new System.Windows.Forms.Label();
             this.moraTypeDropMenu = new System.Windows.Forms.ComboBox();
+            this.moraTimeLeft = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.firstMaterialImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenGemImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueGemImage)).BeginInit();
@@ -1269,7 +1270,7 @@ namespace GenshinCharacterCollector
             // moraText
             // 
             this.moraText.Font = new System.Drawing.Font("Comic Sans MS", 14F);
-            this.moraText.Location = new System.Drawing.Point(1425, 784);
+            this.moraText.Location = new System.Drawing.Point(1503, 784);
             this.moraText.Name = "moraText";
             this.moraText.Size = new System.Drawing.Size(225, 47);
             this.moraText.TabIndex = 90;
@@ -1280,7 +1281,7 @@ namespace GenshinCharacterCollector
             // 
             this.moraLabel.AutoSize = true;
             this.moraLabel.Font = new System.Drawing.Font("Comic Sans MS", 14F);
-            this.moraLabel.Location = new System.Drawing.Point(1418, 839);
+            this.moraLabel.Location = new System.Drawing.Point(1262, 832);
             this.moraLabel.Name = "moraLabel";
             this.moraLabel.Size = new System.Drawing.Size(147, 39);
             this.moraLabel.TabIndex = 91;
@@ -1295,13 +1296,24 @@ namespace GenshinCharacterCollector
             "Level",
             "Talents",
             "Level&Talents"});
-            this.moraTypeDropMenu.Location = new System.Drawing.Point(1191, 784);
+            this.moraTypeDropMenu.Location = new System.Drawing.Point(1269, 784);
             this.moraTypeDropMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.moraTypeDropMenu.Name = "moraTypeDropMenu";
             this.moraTypeDropMenu.Size = new System.Drawing.Size(228, 47);
             this.moraTypeDropMenu.TabIndex = 92;
             this.moraTypeDropMenu.Text = "Type of mora";
             this.moraTypeDropMenu.SelectedIndexChanged += new System.EventHandler(this.moraTypeDropMenu_SelectedIndexChanged);
+            // 
+            // moraBookTimeLeft
+            // 
+            this.moraTimeLeft.AutoSize = true;
+            this.moraTimeLeft.Font = new System.Drawing.Font("Comic Sans MS", 14F);
+            this.moraTimeLeft.Location = new System.Drawing.Point(1531, 834);
+            this.moraTimeLeft.Name = "moraBookTimeLeft";
+            this.moraTimeLeft.Size = new System.Drawing.Size(119, 39);
+            this.moraTimeLeft.TabIndex = 93;
+            this.moraTimeLeft.Text = "0d 0hrs";
+            this.moraTimeLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -1311,6 +1323,7 @@ namespace GenshinCharacterCollector
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1761, 891);
+            this.Controls.Add(this.moraTimeLeft);
             this.Controls.Add(this.moraTypeDropMenu);
             this.Controls.Add(this.moraLabel);
             this.Controls.Add(this.moraText);
@@ -1513,6 +1526,7 @@ namespace GenshinCharacterCollector
         private TextBox moraText;
         private Label moraLabel;
         private ComboBox moraTypeDropMenu;
+        private Label moraTimeLeft;
     }
 }
 
