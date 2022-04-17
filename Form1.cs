@@ -40,6 +40,10 @@ namespace GenshinCharacterCollector
             if (Config == null)
                 Config = new Dictionary<string, object>();
 
+            var c = 0;
+            try { c = int.Parse(Config["SelectedCharacter"].ToString()); }
+            catch { }
+
             for (int i = 0; i < characterBanners.Count; i++)
             {
                 try { expBooks[i] = int.Parse(Config[$"{i}_books"].ToString()); }
@@ -148,9 +152,7 @@ namespace GenshinCharacterCollector
             charactersDropMenu.Items.Clear();
             charactersDropMenu.Items.AddRange(characterNames[useRus ? 1 : 0].ToArray());
 
-            try { selectedCharacter = int.Parse(Config["SelectedCharacter"].ToString()); }
-            catch { selectedCharacter = 0; }
-
+            CharacterSwapped(c);
         }
 
         public void SaveConfig()
@@ -186,8 +188,8 @@ namespace GenshinCharacterCollector
 
         public List<List<string>> characterNames = new List<List<string>>()
         {
-            new List<string>() { "Hu Tao", "Xiao", "Ganyu" },
-            new List<string>() { "Ху Тао", "Сяо", "Гань Юй" }
+            new List<string>() { "Hu Tao", "Xiao", "Ganyu", "Yelan" },
+            new List<string>() { "Ху Тао", "Сяо", "Гань Юй", "Е Лань" }
         };
         public List<string[]> characterBanners = new List<string[]>()
         {
@@ -206,6 +208,11 @@ namespace GenshinCharacterCollector
                 "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png",
                 "teachings_of_diligence.png", "guide_to_diligence.png", "philosophies_of_diligence.png", "crown_of_insight.png",
                 "energy_nectar.png", "shimmering_nectar.png", "whopperflower_nectar.png", "shadow_of_the_warrior.png", "#34AACE" },
+            new string[] { "yelan", "runic_fang.png", "starconch.png",
+                "hydro_gold_gem.png", "hydro_purple_gem.png", "hydro_blue_gem.png", "hydro_green_gem.png",
+                "lieutenants_insignia.png", "sergeants_insignia.png", "recruits_insignia.png",
+                "teachings_of_prosperity.png", "guide_to_prosperity.png", "philosophies_of_prosperity.png", "crown_of_insight.png",
+                "lieutenants_insignia.png", "sergeants_insignia.png", "recruits_insignia.png", "gilded_scale.png", "#3479ce" },
         };
 
         public Dictionary<int, int> expBooks = new Dictionary<int, int>();
