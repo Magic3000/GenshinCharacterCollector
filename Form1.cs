@@ -672,10 +672,23 @@ namespace GenshinCharacterCollector
         {
             "https://genshin.honeyhunterworld.com/db/char/hutao/?lang=",
             "https://genshin.honeyhunterworld.com/db/char/xiao/?lang=",
-            "https://genshin.honeyhunterworld.com/db/char/ganyu/?lang="
+            "https://genshin.honeyhunterworld.com/db/char/ganyu/?lang=",
+            "https://genshin.honeyhunterworld.com/db/char/yelan/?lang="
         };
 
-        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e) => Process.Start($"{charactersHoneyLinks[selectedCharacter]}{(useRus ? "RU" : "EN")}");
+        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string link = string.Empty;
+            try
+            {
+                link = charactersHoneyLinks[selectedCharacter];
+            }
+            catch
+            {
+                link = $"https://genshin.honeyhunterworld.com/db/char/{characterNames[0][selectedCharacter]}/?lang=";
+            }
+            Process.Start($"{link}{(useRus ? "RU" : "EN")}");
+        }
 
         private void UpdateGreenTalents()
         {
